@@ -1,0 +1,11 @@
+{
+  "brand": {
+    "name": "VIREIST",
+    "tagline": "НРИ • триллер и драма",
+    "channel": "@vireist_nri",
+    "site": "vireist.ru",
+    "tg": "vireist"
+  },
+  "note": "Публичный календарь наборов. Обновляется раз в месяц.",
+  "months": ["2026-11", "2026-12"]
+}

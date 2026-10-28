@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Расписание игр — Vireist</title>
+    <meta name="description" content="Публичный календарь наборов на НРИ-игры мастера Vireist: даты, статусы, запись в Telegram.">
+    <!-- После деплоя на GitHub Pages замените preview.png на абсолютный адрес,
+         например https://USERNAME.github.io/REPO/preview.png -->
+    <meta property="og:title" content="Расписание игр — Vireist">
+    <meta property="og:description" content="Публичный календарь наборов на НРИ-игры: даты, статусы, запись в Telegram.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="preview.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Oswald:wght@500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+    <a class="logo" href="index.html">
+        <span class="logo-v">V</span>
+        <span class="logo-text"><strong>VIREIST</strong><small>расписание игр</small></span>
+    </a>
+    <nav class="nav">
+        <a href="https://vireist.ru" target="_blank" rel="noopener">сайт</a>
+        <a href="https://t.me/vireist_nri" target="_blank" rel="noopener">канал</a>
+    </nav>
+    <button class="theme-btn" id="theme-btn" title="Переключить тему">☾</button>
+</header>
+
+<main class="container">
+    <section class="page-head">
+        <div class="overline" id="brand-overline">VIREIST • НРИ • ТРИЛЛЕР И ДРАМА</div>
+        <h1 class="page-title">Расписание игр</h1>
+        <p class="page-note">Публичный календарь наборов. Обновляется раз в месяц; время везде московское.</p>
+
+        <details class="howto">
+            <summary>Как пользоваться календарём</summary>
+            <div class="howto-in">
+                <p><b>Бирюзовый ромб</b> на дате — в этот день запланированы игры. Нажмите на дату, и ниже откроется список игр этого дня.</p>
+                <p><b>Клик по карточке игры</b> или кнопка «Дело на сайте» откроет страницу игры на vireist.ru с полным описанием.</p>
+                <p><b>Кнопка «Записаться в Telegram»</b> откроет чат с мастером, в котором уже набрано сообщение с названием игры и датой — останется нажать «Отправить».</p>
+                <p>Серые даты и метки — игры, которые уже прошли.</p>
+            </div>
+        </details>
+    </section>
+
+    <section class="fest-banner" id="fest-banner" hidden>
+        <span class="fest-stamp">спецсобытия</span>
+        <h3 class="fest-title" id="fest-title"></h3>
+        <p class="fest-note" id="fest-note"></p>
+        <div class="fest-list" id="fest-list"></div>
+    </section>
+
+    <section class="cal-block" id="cal-block">
+        <div class="cal-head">
+            <div class="cal-nav">
+                <button class="cal-btn" id="cal-prev" title="Предыдущий месяц">‹</button>
+                <button class="cal-btn" id="cal-next" title="Следующий месяц">›</button>
+            </div>
+            <h2 class="cal-title" id="cal-title">—</h2>
+            <span class="cal-count" id="cal-count"></span>
+        </div>
+        <div class="cal-week" id="cal-week"></div>
+        <div class="cal-grid" id="cal-grid"></div>
+
+        <div class="cal-legend">
+            <span class="l-game"><i></i>игра</span>
+            <span class="l-fest"><i></i>фестиваль · вход по записи</span>
+            <span class="l-played"><i></i>прошло</span>
+        </div>
+
+        <div class="day-list" id="day-list" hidden>
+            <div class="day-list-head">
+                <h3 class="day-list-title" id="day-list-title"></h3>
+                <span class="day-list-note" id="day-list-note"></span>
+            </div>
+            <div id="day-list-body"></div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>
+            Запись и вопросы — в личные сообщения Telegram.<br>
+            <a href="https://t.me/vireist_nri" target="_blank" rel="noopener">канал @vireist_nri</a> •
+            <a href="https://vireist.ru" target="_blank" rel="noopener">vireist.ru</a> •
+        </p>
+    </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

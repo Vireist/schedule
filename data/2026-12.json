@@ -1,0 +1,21 @@
+{
+  "month": "2026-12",
+  "games": [
+    {
+      "case": "№ 001",
+      "name": "И мир оделся в красоту",
+      "format": "Трипшот",
+      "system": "Irreality",
+      "date": "2026-12-06",
+      "time": "10:30",
+      "durationHours": 6,
+      "age": "18+",
+      "price": "1800 ₽",
+      "status": "набор открыт",
+      "seatsLeft": 4,
+      "url": "https://vireist.ru/#/game/001",
+      "description": "«Мы сохранили человечество от монстров. Теперь позвольте им умереть как людям» — эти слова прозвучали по всем каналам, и мир послушно начал прощаться.",
+      "cover": "covers/worlds-gone-beautiful.jpg"
+    }
+  ]
+}
