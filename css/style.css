@@ -206,3 +206,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
     opacity:0;pointer-events:none;transition:opacity .25s}
 .toast.show{opacity:1}
 .toast.err{border-left-color:var(--red)}
+
+.seats{display:inline-flex;align-items:center;gap:8px}
+.pips{display:inline-flex;gap:5px;align-items:center}
+.pips i{width:8px;height:8px;transform:rotate(45deg);border:1px solid var(--teal-dim);background:transparent}
+.pips i.taken{background:var(--teal);border-color:var(--teal)}

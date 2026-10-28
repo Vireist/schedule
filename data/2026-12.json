@@ -13,6 +13,7 @@
       "price": "1800 ₽",
       "status": "набор открыт",
       "seatsLeft": 4,
+      "seatsTotal": 4,
       "url": "https://vireist.ru/#/game/001",
       "description": "«Мы сохранили человечество от монстров. Теперь позвольте им умереть как людям» — эти слова прозвучали по всем каналам, и мир послушно начал прощаться.",
       "cover": "covers/worlds-gone-beautiful.jpg"

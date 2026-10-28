@@ -166,6 +166,18 @@
         return { cls: 'open', label: g.status };
     }
 
+    function seatsHtml(g, played) {
+        if (played) return '';
+        const left = typeof g.seatsLeft === 'number' ? g.seatsLeft : null;
+        const total = typeof g.seatsTotal === 'number' ? g.seatsTotal : null;
+        if (left === null) return '';
+        if (total === null) return '<span class="seats">свободно: ' + left + '</span>';
+        const taken = Math.max(0, Math.min(total, total - left));
+        let pips = '';
+        for (let i = 0; i < total; i++) pips += '<i class="' + (i < taken ? 'taken' : 'free') + '"></i>';
+        return '<span class="seats"><span class="pips">' + pips + '</span>занято ' + taken + ' из ' + total + '</span>';
+    }
+
     function isFest(g) {
         return g.free === true || !!g.event || /бесплат/i.test(String(g.price || ''));
     }
@@ -294,7 +306,7 @@
         h += '<div class="gc-top">'
             + (g.case ? '<span class="case-num">дело ' + esc(g.case) + '</span>' : '')
             + '<span class="status ' + st.cls + '">' + esc(st.label) + '</span>'
-            + (typeof g.seatsLeft === 'number' && g.seatsLeft > 0 && !played ? '<span class="seats">мест: ' + g.seatsLeft + '</span>' : '')
+            + (typeof g.seatsLeft === 'number' && g.seatsLeft > 0 && !played ? '<span class="seats">мест: ' + g.seatsLeft + '</span>' : '') + seatsHtml(g, played)
             + '</div>';
         h += '<h4 class="gc-title">' + (url ? '<a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(g.name) + '</a>' : esc(g.name)) + '</h4>';
         const meta = [
