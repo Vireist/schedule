@@ -64,29 +64,11 @@
       "free": true,
       "event": "НРИ фестиваль «Котокон»",
       "status": "набор открыт",
-      "seatsLeft": 4,
+      "seatsLeft": 3,
       "seatsTotal": 4,
       "url": "https://vireist.ru/#/game/008",
       "description": "Четверо следователей — одно сознание. Серия диверсий в Москве-Монолите. Иллюзия безопасности рушится, а правда оказывается страшнее любой лжи.",
       "cover": "covers/lazarus-half-life.jpg"
-    },
-    {
-      "case": "№ 007",
-      "name": "Уроборос: Слепой контракт",
-      "format": "Ваншот",
-      "system": "D&D 5e",
-      "date": "2026-11-29",
-      "time": "11:30",
-      "durationHours": 4,
-      "age": "18+",
-      "free": true,
-      "event": "НРИ фестиваль «Котокон»",
-      "status": "набор открыт",
-      "seatsLeft": 4,
-      "seatsTotal": 4,
-      "url": "https://vireist.ru/#/game/007",
-      "description": "В городе Ховетон за голову неуловимого «Инкону» назначена награда. Но все, кто его видел, описывают его по-разному. Найдите его раньше, чем он найдёт вас.",
-      "cover": "covers/uroboros-inconu.jpg"
     }
   ]
 }
