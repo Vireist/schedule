@@ -1,0 +1,50 @@
+{%- assign ev_count = 0 -%}
+{%- capture events -%}
+{%- for mk in months -%}
+{%- assign md = site.data[mk] -%}
+{%- for g in md.games -%}
+{%- if g.date >= today -%}
+{%- if ev_count > 0 %},{% endif -%}
+{%- assign ev_count = ev_count | plus: 1 -%}
+{%- assign price_l = g.price | default: "" | downcase -%}
+{%- assign is_free = false -%}
+{%- if g.free == true or price_l contains "бесплат" -%}{%- assign is_free = true -%}{%- endif -%}
+{
+"@type": "Event",
+"name": {{ g.name | jsonify }},
+"description": {{ g.description | default: "" | jsonify }},
+"startDate": "{{ g.date }}{% if g.time %}T{{ g.time }}:00+03:00{% endif %}",
+{%- if g.time and g.durationHours -%}
+{%- assign tp = g.time | split: ":" -%}
+{%- assign eh = tp[0] | plus: g.durationHours -%}
+{%- if eh < 24 %}
+"endDate": "{{ g.date }}T{% if eh < 10 %}0{% endif %}{{ eh }}:{{ tp[1] }}:00+03:00",
+{%- endif -%}
+{%- endif %}
+"eventStatus": "https://schema.org/EventScheduled",
+{%- if g.event %}
+"eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+"location": {"@type": "Place", "name": {{ g.event | jsonify }}{% if g.venue %}, "address": {{ g.venue | jsonify }}{% endif %}},
+{%- else %}
+"eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+"location": {"@type": "VirtualLocation", "url": {{ g.url | default: site.url | jsonify }}},
+{%- endif %}
+{%- if g.cover %}
+"image": {{ g.cover | absolute_url | jsonify }},
+{%- endif %}
+"organizer": {"@type": "Person", "name": "Vireist", "url": "https://vireist.ru"},
+{%- assign price_num = 0 -%}
+{%- unless is_free -%}{%- assign price_num = g.price | default: "0" | remove: "₽" | strip | plus: 0 -%}{%- endunless -%}
+{%- assign avail = "https://schema.org/InStock" -%}
+{%- if g.seatsLeft != nil and g.seatsLeft <= 0 -%}{%- assign avail = "https://schema.org/SoldOut" -%}{%- endif %}
+"offers": {"@type": "Offer", "price": "{{ price_num }}", "priceCurrency": "RUB", "availability": "{{ avail }}", "url": {{ g.url | default: site.url | jsonify }}}
+}
+{%- endif -%}
+{%- endfor -%}
+{%- endfor -%}
+{%- endcapture -%}
+{%- if ev_count > 0 %}
+<script type="application/ld+json">
+    {"@context": "https://schema.org", "@graph": [{{ events }}]}
+</script>
+{%- endif -%}

@@ -146,6 +146,10 @@
         $('cal-next').addEventListener('click', () => { if (state.mi < state.months.length - 1) { state.mi++; state.sel = null; render(); } });
 
         render();
+
+        // Jekyll-версия: интерактив готов — прячем статический список
+        const staticGames = document.getElementById('static-games');
+        if (staticGames) staticGames.hidden = true;
     }
 
     function monthGames(mo) {

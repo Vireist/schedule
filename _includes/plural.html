@@ -1,0 +1,6 @@
+{%- assign n100 = include.n | modulo: 100 -%}
+{%- assign n10 = include.n | modulo: 10 -%}
+{%- if n100 > 10 and n100 < 20 -%}{{ include.many }}
+{%- elsif n10 > 1 and n10 < 5 -%}{{ include.few }}
+{%- elsif n10 == 1 -%}{{ include.one }}
+{%- else -%}{{ include.many }}{%- endif -%}

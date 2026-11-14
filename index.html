@@ -1,97 +1,110 @@
-<!doctype html>
-<html lang="ru" data-theme="dark">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Vireist · Расписание игр</title>
-    <meta name="description" content="Публичный календарь наборов на НРИ-игры мастера Vireist: даты, статусы, запись в Telegram.">
-    <meta property="og:title" content="Vireist · Расписание игр">
-    <meta property="og:description" content="Публичный календарь наборов на НРИ-игры: даты, статусы, запись в Telegram.">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="preview.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Oswald:wght@500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-</head>
-<body>
+---
+layout: default
+permalink: /
+---
+{%- assign cfg = site.data.config -%}
+{%- assign today = site.time | date: "%Y-%m-%d" -%}
+{%- assign months = cfg.months | sort -%}
+{%- assign mshort = "янв,фев,мар,апр,мая,июн,июл,авг,сен,окт,ноя,дек" | split: "," -%}
+{%- assign mfull = "ЯНВАРЬ,ФЕВРАЛЬ,МАРТ,АПРЕЛЬ,МАЙ,ИЮНЬ,ИЮЛЬ,АВГУСТ,СЕНТЯБРЬ,ОКТЯБРЬ,НОЯБРЬ,ДЕКАБРЬ" | split: "," -%}
+{%- assign wdays = "ПН,ВТ,СР,ЧТ,ПТ,СБ,ВС" | split: "," -%}
+{%- assign tg = cfg.brand.tg | default: "" | remove: "@" -%}
 
-<header class="topbar">
-    <a class="logo" href="index.html">
-        <span class="logo-v">V</span>
-        <span class="logo-text"><strong>VIREIST</strong><small>расписание игр</small></span>
-    </a>
-    <nav class="nav">
-        <a href="https://vireist.ru" target="_blank" rel="noopener">сайт</a>
-        <a href="https://t.me/vireist_nri" target="_blank" rel="noopener">канал</a>
-    </nav>
-    <button class="theme-btn" id="theme-btn" title="Переключить тему">☾</button>
-</header>
+<section class="page-head">
+    <div class="overline" id="brand-overline">{{ cfg.brand.name }} • {{ cfg.brand.tagline }}</div>
+    <h1 class="page-title">Расписание игр</h1>
+    <p class="page-note">{{ cfg.note | default: "Публичный календарь наборов." }} Время везде московское.
+        Настольные ролевые игры (НРИ) онлайн: ваншоты и кампании в жанрах триллер и драма.</p>
 
-<main class="container">
-    <section class="page-head">
-        <div class="overline" id="brand-overline">VIREIST • НРИ • ТРИЛЛЕР И ДРАМА</div>
-        <h1 class="page-title">Расписание игр</h1>
-        <p class="page-note">Публичный календарь наборов. Обновляется раз в месяц; время везде московское.</p>
-
-        <details class="howto">
-            <summary>Как пользоваться календарём</summary>
-            <div class="howto-in">
-                <p><b>Бирюзовый ромб</b> на дате — в этот день запланированы игры. Нажмите на дату, и ниже откроется список игр этого дня.</p>
-                <p><b>Клик по карточке игры</b> или кнопка «Дело на сайте» откроет страницу игры на vireist.ru с полным описанием.</p>
-                <p><b>Кнопка «Записаться в Telegram»</b> откроет чат с мастером, в котором уже набрано сообщение с названием игры и датой — останется нажать «Отправить».</p>
-                <p>Серые даты и метки — игры, которые уже прошли.</p>
-            </div>
-        </details>
-    </section>
-
-    <section class="fest-banner" id="fest-banner" hidden>
-        <span class="fest-stamp">спецсобытия</span>
-        <h3 class="fest-title" id="fest-title"></h3>
-        <p class="fest-note" id="fest-note"></p>
-        <div class="fest-list" id="fest-list"></div>
-    </section>
-
-    <section class="cal-block" id="cal-block">
-        <div class="cal-head">
-            <div class="cal-nav">
-                <button class="cal-btn" id="cal-prev" title="Предыдущий месяц">‹</button>
-                <button class="cal-btn" id="cal-next" title="Следующий месяц">›</button>
-            </div>
-            <h2 class="cal-title" id="cal-title">—</h2>
-            <span class="cal-count" id="cal-count"></span>
+    <details class="howto">
+        <summary>Как пользоваться календарём</summary>
+        <div class="howto-in">
+            <p><b>Бирюзовый ромб</b> на дате — в этот день запланированы игры. Нажмите на дату, и ниже откроется список игр этого дня.</p>
+            <p><b>Клик по карточке игры</b> или кнопка «Дело на сайте» откроет страницу игры на vireist.ru с полным описанием.</p>
+            <p><b>Кнопка «Записаться в Telegram»</b> откроет чат с мастером, в котором уже набрано сообщение с названием игры и датой — останется нажать «Отправить».</p>
+            <p>Серые даты и метки — игры, которые уже прошли.</p>
         </div>
-        <div class="cal-week" id="cal-week"></div>
-        <div class="cal-grid" id="cal-grid"></div>
+    </details>
+</section>
 
-        <div class="cal-legend">
-            <span class="l-game"><i></i>игра</span>
-            <span class="l-fest"><i></i>фестиваль · вход по записи</span>
-            <span class="l-played"><i></i>прошло</span>
+{%- assign fest_title = "" -%}
+{%- capture fest_rows -%}
+{%- for mk in months -%}
+{%- assign md = site.data[mk] -%}
+{%- for g in md.games -%}
+{%- assign price_l = g.price | default: "" | downcase -%}
+{%- if g.free == true or g.event or price_l contains "бесплат" -%}
+{%- if g.date >= today -%}
+{%- if fest_title == "" -%}{%- assign fest_title = g.event | default: "Фестиваль" -%}{%- endif -%}
+{%- assign dp = g.date | split: "-" -%}
+{%- assign mi = dp[1] | plus: 0 | minus: 1 %}
+<div class="fest-row"><b>{{ dp[2] | plus: 0 }} {{ mshort[mi] }}</b><span>{{ g.time }}&nbsp;МСК</span><span>{{ g.name | escape }}</span><span class="free">бесплатно</span></div>
+{%- endif -%}
+{%- endif -%}
+{%- endfor -%}
+{%- endfor -%}
+{%- endcapture -%}
+{%- assign fest_rows = fest_rows | strip -%}
+<section class="fest-banner" id="fest-banner"{% if fest_rows == "" %} hidden{% endif %}>
+<span class="fest-stamp">спецсобытия</span>
+<h3 class="fest-title" id="fest-title">{% if fest_rows != "" %}{{ fest_title | escape }}: вход по записи{% endif %}</h3>
+<p class="fest-note" id="fest-note">{% if fest_rows != "" %}Бесплатные игры на фестивале. Регистрация обязательна — места ограничены: напишите в Telegram, и я забронирую слот.{% endif %}</p>
+<div class="fest-list" id="fest-list">{{ fest_rows }}</div>
+</section>
+
+<section class="cal-block" id="cal-block">
+    <noscript><style>.cal-head,.cal-week,.cal-grid,.cal-legend{display:none}</style></noscript>
+    <div class="cal-head">
+        <div class="cal-nav">
+            <button class="cal-btn" id="cal-prev" title="Предыдущий месяц">‹</button>
+            <button class="cal-btn" id="cal-next" title="Следующий месяц">›</button>
         </div>
-
-        <div class="day-list" id="day-list" hidden>
-            <div class="day-list-head">
-                <h3 class="day-list-title" id="day-list-title"></h3>
-                <span class="day-list-note" id="day-list-note"></span>
-            </div>
-            <div id="day-list-body"></div>
-        </div>
-    </section>
-</main>
-
-<footer class="footer">
-    <div class="container">
-        <p>
-            Запись и вопросы — в личные сообщения Telegram.<br>
-            <a href="https://t.me/vireist_nri" target="_blank" rel="noopener">канал @vireist_nri</a> •
-            <a href="https://vireist.ru" target="_blank" rel="noopener">vireist.ru</a> •
-        </p>
+        <h2 class="cal-title" id="cal-title">—</h2>
+        <span class="cal-count" id="cal-count"></span>
     </div>
-</footer>
+    <div class="cal-week" id="cal-week"></div>
+    <div class="cal-grid" id="cal-grid"></div>
+    <div class="cal-legend" id="cal-legend"></div>
+    <div class="day-list" id="day-list" hidden>
+        <div class="day-list-head">
+            <h3 class="day-list-title" id="day-list-title"></h3>
+            <span class="day-list-note" id="day-list-note"></span>
+        </div>
+        <div id="day-list-body"></div>
+    </div>
+</section>
 
-<script src="js/app.js"></script>
-</body>
-</html>
+<section id="static-games" aria-label="Все игры расписания">
+    {%- for mk in months -%}
+    {%- assign md = site.data[mk] -%}
+    {%- if md.games and md.games.size > 0 -%}
+    {%- assign gs = md.games | sort: "date" -%}
+    {%- assign mp = mk | split: "-" -%}
+    {%- assign mi = mp[1] | plus: 0 | minus: 1 %}
+    <div class="cal-block">
+        <div class="cal-head">
+            <h2 class="cal-title">{{ mfull[mi] }} {{ mp[0] }}</h2>
+            <span class="cal-count">{{ gs.size }} {% include plural.html n=gs.size one="игра" few="игры" many="игр" %}</span>
+        </div>
+        {%- assign days = gs | group_by: "date" -%}
+        {%- for day in days -%}
+        {%- assign dp = day.name | split: "-" -%}
+        {%- assign wdi = day.name | date: "%u" | plus: 0 | minus: 1 %}
+        <div class="day-list" id="day-{{ day.name }}">
+            <div class="day-list-head">
+                <h3 class="day-list-title">Игры {{ dp[2] | plus: 0 }} {{ mshort[mi] }}</h3>
+                <span class="day-list-note">{{ wdays[wdi] }} • {{ day.items.size }} {% include plural.html n=day.items.size one="игра" few="игры" many="игр" %}</span>
+            </div>
+            <div>
+                {%- for g in day.items -%}
+                {%- include game-card.html -%}
+                {%- endfor -%}
+            </div>
+        </div>
+        {%- endfor -%}
+    </div>
+    {%- endif -%}
+    {%- endfor -%}
+</section>
+
+{% include events-jsonld.html %}

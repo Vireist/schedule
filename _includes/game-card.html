@@ -1,0 +1,67 @@
+{%- assign played = false -%}
+{%- if g.date < today -%}{%- assign played = true -%}{%- endif -%}
+
+{%- assign price_l = g.price | default: "" | downcase -%}
+{%- assign fest = false -%}
+{%- if g.free == true or g.event or price_l contains "бесплат" -%}{%- assign fest = true -%}{%- endif -%}
+
+{%- assign st_label = g.status | default: "" -%}
+{%- if st_label == "" -%}{%- assign st_label = "набор открыт" -%}{%- endif -%}
+{%- assign st_cls = "open" -%}
+{%- assign st_l = st_label | downcase -%}
+{%- if st_l contains "собран" -%}{%- assign st_cls = "soon" -%}
+{%- elsif st_l contains "нет мест" or st_l contains "закрыт" -%}{%- assign st_cls = "full" -%}{%- endif -%}
+{%- if g.seatsLeft != nil and g.seatsLeft <= 0 -%}{%- assign st_cls = "full" -%}{%- assign st_label = "мест нет" -%}{%- endif -%}
+{%- if played -%}{%- assign st_cls = "played" -%}{%- assign st_label = "игра прошла" -%}{%- endif -%}
+
+{%- assign taken = 0 -%}
+{%- if g.seatsTotal != nil and g.seatsLeft != nil -%}
+{%- assign taken = g.seatsTotal | minus: g.seatsLeft -%}
+{%- if taken < 0 -%}{%- assign taken = 0 -%}{%- endif -%}
+{%- if taken > g.seatsTotal -%}{%- assign taken = g.seatsTotal -%}{%- endif -%}
+{%- endif -%}
+
+<article class="game-card{% if played %} played{% endif %}{% if fest %} fest{% endif %}">
+    {%- if fest %}
+    <span class="fest-flag">{{ g.event | default: "ФЕСТИВАЛЬ • ВХОД ПО ЗАПИСИ" | escape }}</span>
+    {%- endif %}
+    <div class="gc-cover"><div class="cover{% unless g.cover %} empty{% endunless %}">
+        {%- if g.cover %}<img src="{{ g.cover | relative_url }}" alt="Обложка игры «{{ g.name | escape }}»" loading="lazy">{% endif -%}
+    </div></div>
+    <div class="gc-body">
+        <div class="gc-top">
+            {%- if g.case %}<span class="case-num">дело {{ g.case | escape }}</span>{% endif -%}
+            <span class="status {{ st_cls }}">{{ st_label | escape }}</span>
+            {%- if played == false and g.seatsLeft != nil and g.seatsLeft > 0 %}<span class="seats">мест: {{ g.seatsLeft }}</span>{% endif -%}
+            {%- if played == false and g.seatsLeft != nil %}
+            {%- if g.seatsTotal == nil %}<span class="seats">свободно: {{ g.seatsLeft }}</span>
+            {%- else %}<span class="seats"><span class="pips">{% for i in (1..g.seatsTotal) %}<i class="{% if forloop.index <= taken %}taken{% else %}free{% endif %}"></i>{% endfor %}</span>занято {{ taken }} из {{ g.seatsTotal }}</span>
+            {%- endif -%}
+            {%- endif %}
+        </div>
+        <h4 class="gc-title">{% if g.url %}<a href="{{ g.url | escape }}" target="_blank" rel="noopener">{{ g.name | escape }}</a>{% else %}{{ g.name | escape }}{% endif %}</h4>
+        {%- capture meta -%}
+        {%- if g.time %} • {{ g.time }}&nbsp;МСК{% endif -%}
+        {%- if g.format %} • {{ g.format | escape }}{% endif -%}
+        {%- if g.system %} • <span class="sys">{{ g.system | escape }}</span>{% endif -%}
+        {%- if g.durationHours %} • {{ g.durationHours }}&nbsp;{% include plural.html n=g.durationHours one="час" few="часа" many="часов" %}{% endif -%}
+        {%- if g.age %} • <span class="warn">{{ g.age | escape }}</span>{% endif -%}
+        {%- endcapture -%}
+        <div class="gc-meta">{{ meta | strip | remove_first: "•" | strip }}</div>
+        {%- if g.description %}
+        <p class="gc-desc">{{ g.description | escape }}</p>
+        {%- endif %}
+        <div class="gc-foot"><div class="gc-actions">
+            {%- if g.url %}<a class="btn ghost" href="{{ g.url | escape }}" target="_blank" rel="noopener">Дело на сайте</a>{% endif -%}
+            {%- if played == false and tg != "" -%}
+            {%- assign dp = g.date | split: "-" -%}
+            {%- assign mi = dp[1] | plus: 0 | minus: 1 -%}
+            {%- capture tg_text -%}Здравствуйте! Хочу записаться на игру «{{ g.name }}» ({{ dp[2] | plus: 0 }} {{ mshort[mi] }}, {{ g.time | default: "время уточняется" }} МСК).{%- endcapture -%}
+            <a class="btn" href="https://t.me/{{ tg }}?text={{ tg_text | url_encode }}" target="_blank" rel="noopener">Записаться в Telegram</a>
+            {%- endif -%}
+        </div>
+            {%- if fest %}<span class="price free">вход по записи</span>
+            {%- elsif g.price %}<span class="price">{{ g.price | escape }}</span>{% endif -%}
+        </div>
+    </div>
+</article>

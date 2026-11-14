@@ -1,0 +1,13 @@
+title: "Vireist · Расписание игр"
+description: "Публичный календарь наборов на НРИ-игры мастера Vireist: даты, статусы, запись в Telegram."
+url: "https://vireist.ru"
+baseurl: "/schedule"
+lang: ru
+timezone: Europe/Moscow
+
+# JSON лежат где лежали: Jekyll читает их в site.data
+# И копирует в _site как статику (проверено по исходникам reader.rb)
+data_dir: data
+
+plugins:
+  - jekyll-sitemap

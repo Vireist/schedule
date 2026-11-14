@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="{{ site.lang | default: 'ru' }}" data-theme="dark">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page.title | default: site.title }}</title>
+    <meta name="description" content="{{ page.description | default: site.description }}">
+    <link rel="canonical" href="{{ page.url | absolute_url }}">
+    <meta property="og:title" content="{{ page.title | default: site.title }}">
+    <meta property="og:description" content="{{ page.description | default: site.description }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ page.url | absolute_url }}">
+    <meta property="og:image" content="{{ '/preview.png' | absolute_url }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Oswald:wght@500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
+    <link rel="icon" type="image/png" href="{{ '/favicon.png' | relative_url }}">
+    <link rel="apple-touch-icon" href="{{ '/apple-touch-icon.png' | relative_url }}">
+</head>
+<body>
+
+<header class="topbar">
+    <a class="logo" href="{{ '/' | relative_url }}">
+        <span class="logo-v">V</span>
+        <span class="logo-text"><strong>VIREIST</strong><small>расписание игр</small></span>
+    </a>
+    <nav class="nav">
+        <a href="https://vireist.ru" target="_blank" rel="noopener">сайт</a>
+        <a href="https://t.me/vireist_nri" target="_blank" rel="noopener">канал</a>
+    </nav>
+    <button class="theme-btn" id="theme-btn" title="Переключить тему">☾</button>
+</header>
+
+<main class="container">
+    {{ content }}
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>
+            Запись и вопросы — в личные сообщения Telegram.<br>
+            <a href="https://t.me/vireist_nri" target="_blank" rel="noopener">канал @vireist_nri</a> •
+            <a href="https://vireist.ru" target="_blank" rel="noopener">vireist.ru</a> •
+        </p>
+    </div>
+</footer>
+
+<script src="{{ '/js/app.js' | relative_url }}"></script>
+</body>
+</html>
